@@ -11,7 +11,7 @@ class Config(object):
     # job存储位置
     SCHEDULER_JOBSTORES = {
         'default': SQLAlchemyJobStore(
-            url=fr"sqlite:///{config.config.GetConfig().get_project_path()}\data\scheduler.db")
+            url=fr"sqlite:///{config.config.GetConfig().get_project_path()}/data/scheduler.db")
     }
     # 线程池配置
     SCHEDULER_EXECUTORS = {
