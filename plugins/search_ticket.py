@@ -159,7 +159,7 @@ class SearchTicket:
                              "user_name": "", "version_no": "5.8.0.4"}}]
         # print(_url)
         a = {
-            'c': f'{json.dumps(data).replace(' ', '')}'
+            'c': f"{json.dumps(data).replace(' ', '')}"
         }
         # print(urllib.parse.urlencode(a).split('=')[1])
         _url = (f"https://mobile.12306.cn/otsmobile/app/mgs/mgw.htm?"

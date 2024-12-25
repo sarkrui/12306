@@ -50,7 +50,7 @@ class Station:
     def create_station_dict(response):
         station_info = json.loads(response)
         station_dict = {}
-        db = DB(f'{GetConfig().get_project_path()}\\data\\station_code.db')
+        db = DB(f'{GetConfig().get_project_path()}/data/station_code.db')
         db.delete("delete from station", ())
         # db = DB(f'..\\data\\station_code.db')
         for item in station_info:
@@ -63,7 +63,7 @@ class Station:
 
     @staticmethod
     def check_station_code(keyword, _type='station'):
-        db = DB(f'{GetConfig().get_project_path()}\\data\\station_code.db')
+        db = DB(f'{GetConfig().get_project_path()}/data/station_code.db')
         if _type == 'station':
             response = db.select('select * from station where station_name like ?', (f"%{keyword}%",))
         else:
