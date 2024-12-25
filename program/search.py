@@ -11,15 +11,24 @@ class Route:
     def search(request):
         _type = request.args.get('type')
         if _type == 'StationScreen':
-            station = request.args.get('station')
-            if station is not None:
-                result = Station().check_station_code(station)
+            start_station = request.args.get('startStation')  # 
+            end_station = request.args.get('endStation')  # Retrieve the optional endStation argument
+            if start_station is not None:
+                result = Station().check_station_code(start_station)
                 flag = request.args.get('flag')
                 if len(result) != 0:
-                    if flag is None:
-                        return {'code': '0', 'data': StationScreen(result[0][1]).get_station_screen()}
-                    else:
-                        return {'code': '0', 'data': StationScreen(result[0][1]).get_station_screen(int(flag))}
+                    station_screen_data = StationScreen(result[0][1]).get_station_screen() if flag is None \
+                        else StationScreen(result[0][1]).get_station_screen(int(flag))
+                    
+                    # If endStation is provided, filter stationWaitingScreens
+                    if end_station:
+                        filtered_waiting_screens = [
+                            screen for screen in station_screen_data.get('stationWaitingScreens', [])
+                            if screen.get('endStationName') == end_station
+                        ]
+                        station_screen_data['stationWaitingScreens'] = filtered_waiting_screens
+                    
+                    return {'code': '0', 'data': station_screen_data}
                 else:
                     return {'code': '1', 'data': []}
             else:
